@@ -16,14 +16,14 @@ This is a web spider for JD.com, based on node.js
 - Edit **config.js**    
   编辑 **config.js**
 
-```js
+  ```js
    module.exports = {
        pageLength:10, //number of page crawled for each catalog每个品类抓取的页数
        dbName:"jddb", //the name of database数据库名称
        collectionName:"goods" //the collection name in database 数据库集合名称
    };
 
-```
+  ```
 - Edit **catalog.xlsx**, which is the product catalog with two columns. This program will crawl JD products according to these items. You can add other catalogs into it.    
   编辑 **catalog.xlsx**, 这是有两列的商品目录表,程序会根据这些项目抓取京东的商品数据, 你可以修改它增加额外的目录.
 - Edit **page.txt**. This is the start index of the catalog mapped to the index in **catalog.xlsx**, which will be read when running the program each time. Default value is 0   
