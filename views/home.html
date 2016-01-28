@@ -1,0 +1,364 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head">
+<title>
+    Price Comparison Service
+</title>
+
+<meta http-equiv="Content-Type" content="text/html; charset=GBK">
+<link rel=stylesheet href="stylesheets/headfoot.css" type="text/css">
+<link rel=stylesheet href="stylesheets/manmanbuy.css" type="text/css">
+<link rel=stylesheet href="stylesheets/header.css" type="text/css"/>
+<link rel=stylesheet href="stylesheets/skip.css" type="text/css">
+<link rel=stylesheet href="stylesheets/backtop.css" type="text/css">
+<link rel=stylesheet href="stylesheets/searchStyle.css" type="text/css">
+<link rel=stylesheet href="stylesheets/sortby.css" type="text/css">
+<link rel=stylesheet href="stylesheets/body.css" type="text/css">
+<link rel=stylesheet href="stylesheets/historical_prices.css" type="text/css">
+<script src="javascripts/jquery.js" type="text/javascript"></script>
+<script src="javascripts/autocomplete.js" type="text/javascript"></script>
+<link rel=stylesheet href="stylesheets/autocomplete.css" type="text/css">
+<!--主体script-->
+<script>
+var USReqReturn;
+var CNReqReturn;
+var str;
+var option;
+var sort;
+var usBrandArr = [];
+var cnBrandArr = [];
+Date.prototype.Format = function (fmt) { //author: meizz
+    var o = {
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds()             //毫秒
+    };
+    if (/(y+)/.test(fmt))
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+}
+
+function isPositiveNum(s) {//是否为正整数
+    var re = /^[0-9]*[1-9][0-9]*$/;
+    return re.test(s)
+}
+
+$(function () {
+
+    $("#nav-searchbar").bind("submit", function (event) {
+
+            if (CNReqReturn != undefined) {
+                CNReqReturn.abort();
+            }
+            CNReqReturn = $.get("/feed" +
+                    "backCN", function (data, textStatus) {
+            });
+        return false;
+    })
+
+
+})
+
+</script>
+<!--主体script结束-->
+
+</head>
+
+<body style="line-height: 0px; margin: 0px;margin: auto;">
+
+<!--头部开始-->
+<header id='header' class="nav-locale-us nav-lang-en"
+        style="margin: auto;background-image:url('images/bg7.jpg');background-position: 0">
+    <div id="navbar" role="navigation" class="nav-subnav-container nav-skin-default nav-sprite-v1">
+
+        <div id="searchText-outer" style=";display: none">
+
+            <div id="searchText" style="width: 331px;margin:auto;line-height: 89px;text-align: center;">
+                PRICOVERY
+            </div>
+
+        </div>
+        <div id="searchLogo-outer" style="display: block">
+            <div style="width: 413px;margin: auto;margin-bottom: 10px;">
+                <img id="searchLogo" src='images/logo2.png' style="width: 413px"/>
+            </div>
+
+
+        </div>
+        <div id="nav-bar-outer">
+
+
+            <div id="nav-bar-inner" class="nav-sprite">
+                <div id="nav-bar-left" style="width: 200px"></div>
+                <div id="nav-bar-right" style="width: 200px"></div>
+
+                <div id="nav-bar-middle">
+
+
+                    <form id="nav-searchbar" method="get" name="site-search"
+                          role="search" accept-charset="utf-8"
+                          class="nav-searchbar-inner">
+
+
+                        <div id="submit-button" class="nav-submit-button nav-sprite">
+                            <input type="submit" value="Go" class="nav-submit-input" >
+                        </div>
+
+             <span id="nav-search-in" class="nav-sprite nav-facade-active" style="width: auto;">
+             <span id="nav-search-in-content" data-value="search-alias=aps">
+                All Departments
+             </span>
+              <span class="nav-down-arrow"></span>
+              <select data-nav-digest="En20Ekcu3jb8T3PEGBcEo3CPwY0" data-nav-selected="0" name="url"
+                      id="searchDropdownBox" class="searchSelect"
+                      style="position: absolute;height: 37px;margin: auto;">
+                  <option value="all">All Departments</option>
+                  <option value="mobile-apps">Apps for Android</option>
+                  <option value="baby-products">Baby</option>
+                  <option value="beauty">Beauty</option>
+                  <option value="cell-phones">Cell Phones &amp; Accessories</option>
+                  <option value="clothing">Clothing &amp; Accessories</option>
+                  <option value="computers">Computers</option>
+                  <option value="electronics">Electronics</option>
+                  <option value="grocery">Grocery &amp; Gourmet Food</option>
+                  <option value="hpc">Health &amp; Personal Care</option>
+                  <option value="jewelry">Jewelry</option>
+                  <option value="digital-text">Kindle Store</option>
+                  <option value="mi">Musical Instruments</option>
+                  <option value="office-products">Office Products</option>
+                  <option value="pets">Pet Supplies</option>
+                  <option value="shoes">Shoes</option>
+                  <option value="software">Software</option>
+                  <option value="sports">Sports &amp; Outdoors</option>
+                  <option value="toys-and-games">Toys &amp; Games</option>
+                  <option value="watches">Watches</option>
+              </select>
+            </span>
+
+                        <div class="nav-searchfield-width">
+                            <div id="nav-iss-attach">
+                                <input type="text" id="twotabsearchtextbox"
+                                       name="field-keywords" autocomplete="off" maxlength="256">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+        <div id="introduction-block" style="display: none">
+            <div id='introduction-inner-block'>INTRODUCTION</div>
+        </div>
+
+
+    </div>
+</header>
+<!--头部结束-->
+
+<!--排序选择栏-->
+<div id="sort-by"
+        >
+
+    <div style="
+       float:left;
+       height: 23px;
+       text-align: center;
+       line-height: 21px;margin: auto;
+       margin-left: 42%;
+       margin-right: 15px;
+       font-family: 'microsoft yahei';
+       font-size: 12px;
+       font-weight: bold;
+       color: white">
+        SORTED BY
+    </div>
+
+
+    <div style="
+    float: left;
+    font-family: 'microsoft yahei';
+    font-size: 12px;  font-weight: bold;
+    color: #ffffff;
+">
+
+        <select data-nav-digest="En20Ekcu3jb8T3PEGBcEo3CPwY0" data-nav-selected="0" name="url" id="sort-by-select"
+                class="searchSelect" title="Search in"
+                style="width: 85px;position: absolute;">
+            <option value="default">Amazon</option>
+            <option value="matching">Matching</option>
+            <option value="price-hl">Price ↓</option>
+            <option value="price-lh">Price ↑</option>
+
+        </select>
+    </div>
+</div>
+<!--排序选择栏结束-->
+
+<!--品牌栏-->
+<div id='brand' style="
+    width: 1200px;
+    height: 53px;
+    margin: auto;
+    display: none;
+    position: relative;
+    z-index: 3;
+">
+    <table id="usbrand" style="
+    width: 580px;
+    float: left;
+    margin: -2px auto;
+
+
+    padding-bottom: 21px;
+    margin-right: 39px;
+"></table>
+
+    <table id="cnbrand" style="
+    width: 580px;
+    float: left;
+    margin: -2px auto;
+
+
+
+     padding-bottom: 21px;
+
+
+"></table>
+</div>
+<!--品牌栏结束-->
+
+<!--主体开始-->
+<div id="main-body" style="width:1200px;margin:6px auto;position: relative;display: none">
+
+    <!--商品展示主体-->
+    <div style=" text-align: center;padding-bottom: 79px;margin:auto">
+
+        <div id="listSearchResult" style="line-height: 20px;width: 100%">
+            <!--商品列表-->
+
+            <div class="product" style="width: 100%">
+
+                <!--美国商品-->
+
+                <div class="product-grade-0" style="width: 585px;float: left;padding-right: 30px">
+                    <div id="usProduct"></div>
+                    <img class='loading' id='usloading' src='images/loading.gif'
+                         style="display:none;width:80px;height:80px;margin:10px auto;">
+                </div>
+
+                <!--美国商品结束-->
+
+                <!--中国商品开始-->
+                <div class="product-grade-1" style="width: 585px;float: left">
+                    <div id="cnProduct"></div>
+                    <img class='loading' id='cnloading' src='images/loading.gif'
+                         style="display:none;width:80px;margin: 10px auto">
+                </div>
+
+                <!--中国商品结束-->
+
+                <div style="clear:both;"></div>
+
+
+            </div>
+            <!--商品列表结束-->
+
+        </div>
+        <!--图片-->
+
+
+        <!--图片结束-->
+    </div>
+    <!--商品展示主体结束-->
+
+
+    <!--页面跳转-->
+
+    <div class="pagination r-c9" id="J_s_pagination"
+         style="  bottom:0px;  left:0px;  width:100%;overflow:auto;  z-index:1;
+         display:none">
+        <div class="pagination-pages">
+            <div class="pagination-page">
+                <span title="上一页" class="page-prev" style="cursor: pointer">上一页</span>
+                <a class="page-cur">1</a>
+                <a class="page">2</a>
+                <a class="page">3</a>
+
+                <span title="下一页" class="page-next" style="cursor: pointer">下一页</span>
+            </div>
+
+            <div class="skip" style="float:left"><span style="color: white">向第</span>
+                <input class="page-num" name="page" type="text" size="3">
+                <span style="color: white">页</span>
+                <button id='skip' class="btn-jump btn btn-size25" style="cursor: pointer;width: 51px;">跳转</button>
+            </div>
+
+
+        </div>
+
+    </div>
+
+    <!--主体结束-->
+
+
+    <!--返回顶部开始-->
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            var back_top_btn = $('#back_top');
+            var fk = $('#fk');
+            fk.fadeIn();
+
+            if (back_top_btn.length) {
+                var scrollTimer;
+                $(window).scroll(function () {
+                    clearTimeout(scrollTimer);
+                    scrollTimer = setTimeout(function () {
+                        var scrollTop = $(this).scrollTop();
+                        if (scrollTop > 400) {
+                            back_top_btn.fadeIn();
+
+                        } else {
+                            back_top_btn.fadeOut();
+                        }
+                    }, 100);
+                });
+                $("#back_top").click(function () {
+                    $('body,html').animate({
+                        scrollTop: 0
+                    }, 400);
+                });
+
+            }
+        });
+
+        $('#nav-search-in').hover(function(){
+
+            $(this).addClass('hover');
+        }, function(){
+            $(this).removeClass('hover');
+        });
+
+        $('#submit-button').hover(function(){
+
+            $(this).addClass('submit-hover');
+        }, function(){
+            $(this).removeClass('submit-hover');
+        });
+
+    </script>
+    <!--返回头部结束-->
+
+    <a href="#" rel="nofollow" role="button" id="back_top" tabindex="-1" title="返回顶部" style="display: none;"
+       _hover-ignore="1">返回顶部</a>
+
+</div>
+<!--主体结束-->
+</body>
+</html>
