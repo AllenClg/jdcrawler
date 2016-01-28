@@ -72,7 +72,7 @@ function main(res) {
                     if (err) {
                         return;
                     } else {
-                        startCatalogPosition = data.toString();
+                        startCatalogPosition = parseInt(data.toString());
                         fs.close(fd);
                         var obj = xlsx.parse('catalog.xlsx')[0].data;//读取预先定义的品类
                         //最外层商品品类队列
